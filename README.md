@@ -53,7 +53,7 @@ Stablecoin payments have a privacy trilemma. **Plaintext on-chain** leaks custom
 
 This is not zero-knowledge. The engine assumes a trusted execution path (TEE, oracle, or off-chain settlement agent) that can read the full payment and return per-role views.
 
-Conceptually adjacent to [Oasis Protocol](https://oasisprotocol.org)'s confidential-compute policy model, [W3C Verifiable Credentials](https://www.w3.org/TR/vc-data-model-2.0/) selective disclosure, and stablecoin-issuer-side compliance modules. Different scope: this is **just the policy engine** — no settlement, no chain integration, no TEE primitive.
+This is **just the policy engine** — no settlement, no chain integration, no TEE primitive.
 
 ## How it works
 
