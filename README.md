@@ -1,5 +1,8 @@
 # stablecoin-policy
 
+[![ci](https://github.com/lcosent/stablecoin-policy/actions/workflows/ci.yml/badge.svg)](https://github.com/lcosent/stablecoin-policy/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A **selective-disclosure policy engine** for stablecoin payments. Different counterparties see different fields based on a declarative, signed policy. Built for the regulated-payments case where **full privacy is illegal but plaintext on chain is irresponsible**.
 
 ```ts
