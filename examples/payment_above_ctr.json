@@ -1,0 +1,19 @@
+{
+  "amount": 25000,
+  "currency": "USDC",
+  "memo": "Q1 settlement",
+  "payer": {
+    "id": "did:p:gamma",
+    "display_name": "Gamma Co",
+    "legal_name": "Gamma Corporation",
+    "kyc_tier": 3,
+    "jurisdiction": "US"
+  },
+  "counterparty": {
+    "id": "did:p:delta",
+    "display_name": "Delta GmbH",
+    "legal_name": "Delta GmbH",
+    "sanctions_hits": 0,
+    "jurisdiction": "DE"
+  }
+}

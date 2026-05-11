@@ -1,0 +1,62 @@
+version: 1
+metadata:
+  name: retail_payment_v1
+  jurisdiction: US
+  description: >
+    Retail stablecoin payment under bank CTR/SAR thresholds.
+    Merchant sees amount + counterparty display name.
+    AML regulator view only triggers above CTR threshold.
+
+predicates:
+  amount_under_ctr:
+    field: amount
+    op: lt
+    value: 10000
+  amount_under_sar:
+    field: amount
+    op: lt
+    value: 5000
+  payer_kyc_at_least_tier2:
+    field: payer.kyc_tier
+    op: gte
+    value: 2
+  counterparty_not_sanctioned:
+    field: counterparty.sanctions_hits
+    op: eq
+    value: 0
+  same_jurisdiction:
+    field: payer.jurisdiction
+    op: eq
+    field_b: counterparty.jurisdiction
+
+views:
+  merchant:
+    reveal:
+      - amount
+      - currency
+      - memo
+      - payer.display_name
+    attest:
+      - payer_kyc_at_least_tier2
+      - counterparty_not_sanctioned
+
+  aml_regulator:
+    when: not(amount_under_ctr)
+    reveal:
+      - amount
+      - currency
+      - payer.id
+      - counterparty.id
+      - payer.jurisdiction
+      - counterparty.jurisdiction
+
+  settlement_agent:
+    reveal:
+      - "*"
+
+  public_chain:
+    reveal: []
+    attest:
+      - amount_under_ctr
+      - payer_kyc_at_least_tier2
+      - counterparty_not_sanctioned

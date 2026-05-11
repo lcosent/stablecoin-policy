@@ -1,0 +1,19 @@
+{
+  "amount": 8500,
+  "currency": "USDC",
+  "memo": "invoice 42",
+  "payer": {
+    "id": "did:p:alice",
+    "display_name": "Acme Inc.",
+    "legal_name": "Acme Incorporated",
+    "kyc_tier": 3,
+    "jurisdiction": "US"
+  },
+  "counterparty": {
+    "id": "did:p:bob",
+    "display_name": "Beta LLC",
+    "legal_name": "Beta LLC",
+    "sanctions_hits": 0,
+    "jurisdiction": "US"
+  }
+}

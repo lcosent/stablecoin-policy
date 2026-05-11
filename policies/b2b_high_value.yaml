@@ -1,0 +1,52 @@
+version: 1
+metadata:
+  name: b2b_high_value_v1
+  jurisdiction: US
+  description: >
+    Cross-border B2B stablecoin payment above CTR threshold.
+    Both AML reporter and travel-rule recipient get views.
+
+predicates:
+  travel_rule_threshold:
+    field: amount
+    op: gte
+    value: 3000
+  cross_border:
+    field: payer.jurisdiction
+    op: neq
+    field_b: counterparty.jurisdiction
+  both_kyc_tier3:
+    field: payer.kyc_tier
+    op: gte
+    value: 3
+  counterparty_clean:
+    field: counterparty.sanctions_hits
+    op: eq
+    value: 0
+
+views:
+  merchant:
+    reveal: [amount, currency, memo, payer.legal_name]
+    attest: [counterparty_clean, both_kyc_tier3]
+
+  aml_regulator:
+    reveal: [amount, currency, payer.id, counterparty.id, payer.jurisdiction, counterparty.jurisdiction]
+
+  travel_rule_recipient:
+    when: and(travel_rule_threshold, cross_border)
+    reveal:
+      - amount
+      - currency
+      - payer.id
+      - payer.legal_name
+      - payer.jurisdiction
+      - counterparty.id
+      - counterparty.legal_name
+      - counterparty.jurisdiction
+
+  settlement_agent:
+    reveal: ["*"]
+
+  public_chain:
+    reveal: []
+    attest: [counterparty_clean, both_kyc_tier3]
